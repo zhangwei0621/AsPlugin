@@ -1,0 +1,24 @@
+# macOS 本地文件
+.DS_Store
+._*
+
+# Gradle 和 Kotlin 缓存及构建产物
+.gradle/
+.kotlin/
+build/
+out/
+
+# IDE 本地配置，保留共享的 .run 配置
+.idea/
+*.iml
+*.ipr
+*.iws
+local.properties
+
+# IntelliJ Platform 下载缓存和测试 IDE 沙箱
+.intellijPlatform/
+
+# JVM 崩溃日志和堆转储
+hs_err_pid*.log
+replay_pid*.log
+*.hprof

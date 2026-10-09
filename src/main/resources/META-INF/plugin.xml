@@ -1,0 +1,14 @@
+<idea-plugin>
+    <id>com.github.zhangwei0621.asplugin</id>
+    <name>AS Starter</name>
+    <vendor>zhangwei0621</vendor>
+    <description><![CDATA[
+        <p>Android Studio, IntelliJ Platform, Kotlin, Gradle.</p>
+        <p>插件开发初始工程，提供基于 IntelliJ Platform 的构建、调试和打包配置，
+        可按需求扩展菜单、侧边栏和设置页面。</p>
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+
+    <resource-bundle>messages.MyBundle</resource-bundle>
+</idea-plugin>
