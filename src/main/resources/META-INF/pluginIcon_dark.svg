@@ -1,0 +1,15 @@
+<!-- 组合 Lucide 花括号和双向箭头，深色主题使用高亮度的蓝、绿、玫红色。 -->
+<!-- 来源：https://github.com/lucide-icons/lucide/blob/main/icons/braces.svg -->
+<!-- 来源：https://github.com/lucide-icons/lucide/blob/main/icons/arrow-left-right.svg -->
+<!-- 许可证：同目录 LICENSE-LUCIDE.txt。 -->
+<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+     fill="none" stroke="#60A5FA" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/>
+    <path stroke="#FB7185" d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/>
+    <g transform="translate(6 6) scale(0.5)" stroke="#34D399" stroke-width="2.4">
+        <path d="M8 3 4 7l4 4"/>
+        <path d="M4 7h16"/>
+        <path d="m16 21 4-4-4-4"/>
+        <path d="M20 17H4"/>
+    </g>
+</svg>

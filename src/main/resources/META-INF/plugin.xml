@@ -1,14 +1,24 @@
 <idea-plugin>
-    <id>com.github.zhangwei0621.asplugin</id>
-    <name>AS Starter</name>
-    <vendor>zhangwei0621</vendor>
-    <description><![CDATA[
-        <p>Android Studio, IntelliJ Platform, Kotlin, Gradle.</p>
-        <p>插件开发初始工程，提供基于 IntelliJ Platform 的构建、调试和打包配置，
-        可按需求扩展菜单、侧边栏和设置页面。</p>
-    ]]></description>
+    <!-- 插件元数据、兼容范围、介绍和更新说明由构建脚本统一注入。 -->
 
+    <!-- 只依赖通用平台能力，JSON 比对本身不需要 Android SDK 或 Android 专属插件。 -->
     <depends>com.intellij.modules.platform</depends>
 
+    <!-- 指向 properties 文案资源，不是 Kotlin 中 MyBundle 类的完整包名。 -->
     <resource-bundle>messages.MyBundle</resource-bundle>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <!-- IDE 通过工厂创建窗口内容，id 必须与菜单动作激活窗口时使用的标识一致。 -->
+        <!-- 图标从 Kotlin 静态字段加载，复用品牌 SVG 并缩放到工具窗口入口尺寸。 -->
+        <toolWindow id="JsonDiff" anchor="bottom" icon="com.github.zhangwei0621.asplugin.jsondiff.ui.JsonDiffIcons.jsonDiff"
+                    factoryClass="com.github.zhangwei0621.asplugin.jsondiff.ui.JsonDiffToolWindowFactory"/>
+    </extensions>
+
+    <actions>
+        <!-- 注册打开窗口的菜单动作，id 是动作标识，class 指向具体实现。 -->
+        <action id="JsonDiff.Open" class="com.github.zhangwei0621.asplugin.jsondiff.ui.OpenJsonDiffAction">
+            <!-- 将入口添加到 Tools 菜单末尾。 -->
+            <add-to-group group-id="ToolsMenu" anchor="last"/>
+        </action>
+    </actions>
 </idea-plugin>

@@ -1,0 +1,16 @@
+# 第三方库及构建插件版本，与 gradle.properties 中的插件发布版本无关。
+[versions]
+kotlin = "2.0.21"
+gson = "2.13.2"
+junit = "4.13.2"
+shadow = "9.2.2"
+
+# build.gradle.kts 通过 libs.gson、libs.junit 使用依赖别名。
+[libraries]
+gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
+junit = { module = "junit:junit", version.ref = "junit" }
+
+# 项目构建脚本通过 libs.plugins 应用插件；settings 插件版本在 settings.gradle.kts 中维护。
+[plugins]
+kotlinJvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
