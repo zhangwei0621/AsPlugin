@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.logic
+package com.github.zhangwei0621.asplugin.jsondifftool.logic
 
 import com.github.zhangwei0621.asplugin.internal.gson.GsonBuilder
 import com.github.zhangwei0621.asplugin.internal.gson.JsonArray

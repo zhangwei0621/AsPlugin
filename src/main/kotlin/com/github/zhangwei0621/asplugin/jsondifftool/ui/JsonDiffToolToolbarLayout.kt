@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.ui
+package com.github.zhangwei0621.asplugin.jsondifftool.ui
 
 import java.awt.Component
 import java.awt.Container
@@ -11,7 +11,7 @@ import java.awt.LayoutManager
  *
  * 间距由调用方通过 JBUI.scale 处理，本类仅负责计算尺寸和坐标，便于独立测试。
  */
-internal class JsonDiffToolbarLayout(
+internal class JsonDiffToolToolbarLayout(
     private val horizontalGap: Int,
     private val verticalGap: Int,
 ) : LayoutManager {

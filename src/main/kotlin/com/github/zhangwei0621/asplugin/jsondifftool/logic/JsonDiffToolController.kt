@@ -1,6 +1,6 @@
-package com.github.zhangwei0621.asplugin.jsondiff.logic
+package com.github.zhangwei0621.asplugin.jsondifftool.logic
 
-import com.github.zhangwei0621.asplugin.jsondiff.util.JsonCaretMapper
+import com.github.zhangwei0621.asplugin.jsondifftool.util.JsonCaretMapper
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.application.ModalityState
@@ -25,7 +25,7 @@ import com.intellij.util.Alarm
  * @param onPending 在 EDT 上通知 UI 显示校验中状态。
  * @param onResult 在 EDT 上返回左右结果，文档格式化已在回调前完成。
  */
-internal class JsonDiffController(
+internal class JsonDiffToolController(
     private val project: Project,
     private val left: Document,
     private val right: Document,

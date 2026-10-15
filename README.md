@@ -1,4 +1,4 @@
-# JsonDiff
+# JsonDiffTool
 
 基于 IntelliJ Platform 的 Android Studio JSON 比对插件，提供自动格式化和左右双栏差异高亮。
 
@@ -8,7 +8,7 @@
 
 1. 在 Android Studio 中打开 `Settings > Plugins`，点击齿轮并选择 `Install Plugin from Disk`。
 2. 选择 `build/distributions/` 下生成的插件 ZIP，无需解压，按 IDE 提示重启。
-3. 打开任意项目，从 `Tools > JsonDiff` 或底部 `JsonDiff` 工具窗口进入比对界面。
+3. 打开任意项目，从 `Tools > JsonDiffTool` 或底部 `JsonDiffTool` 工具窗口进入比对界面。
 
 插件适用于 API 响应核对、本地配置比对和调试数据检查。JSON 内容在本地处理，比对操作无需 Android SDK 或模拟器。安装兼容范围由构建脚本根据配置注入，详见[项目配置](#项目配置)。后续 IDE 仍需通过兼容性校验确认。
 
@@ -98,7 +98,7 @@
 
 ## 常见问题
 
-- **找不到 JsonDiff 入口：**确认插件已启用并完成重启，且当前已经打开项目，再查看 `Tools > JsonDiff`。
+- **找不到 JsonDiffTool 入口：**确认插件已启用并完成重启，且当前已经打开项目，再查看 `Tools > JsonDiffTool`。
 - **安装后仍看到旧的插件介绍：**重新从磁盘安装最新 ZIP 并按提示重启；重新打包不会自动替换已安装的插件。
 - **测试 IDE 要求下载 SDK：**`runAndroidStudio` 使用独立配置，首次启动可能显示 Android Studio 初始化向导。也可直接把安装包安装到日常使用的 IDE 中测试。
 - **关闭项目后输入消失：**当前版本不保存比对内容，关闭项目前请自行保留需要的数据。
@@ -166,7 +166,7 @@ sh ./gradlew verifyPlugin
 
 插件品牌图标为 `src/main/resources/META-INF/pluginIcon.svg`，深色主题使用同目录的 `pluginIcon_dark.svg`，IDE 自动识别。这组 40×40 图标组合了 Lucide 的 [Braces](https://lucide.dev/icons/braces) 与 [Arrow Left Right](https://lucide.dev/icons/arrow-left-right)：蓝色、玫红色花括号表达 JSON，绿色双向箭头表达数据比对；ISC 许可证保留在同目录的 `LICENSE-LUCIDE.txt` 中。
 
-工具窗口和 Tools 菜单入口通过 `ui/JsonDiffIcons.kt` 共用品牌图标，并缩放为 16×16；`plugin.xml` 使用该类的静态字段注册工具窗口图标。
+工具窗口和 Tools 菜单入口通过 `ui/JsonDiffToolIcons.kt` 共用品牌图标，并缩放为 16×16；`plugin.xml` 使用该类的静态字段注册工具窗口图标。
 
 IDEA 中保留了 `Run Plugin`、`Run Tests` 和 `Run Verifications` 运行配置，其中 `Run Verifications` 执行插件结构校验。发布前执行 `verifyPlugin` 检查实际 API 兼容性。
 
@@ -181,16 +181,17 @@ IDEA 中保留了 `Run Plugin`、`Run Tests` 和 `Run Verifications` 运行配�
 | `src/main/resources/META-INF/plugin.xml` | 插件依赖、文案资源和功能注册 |
 | `docs/plugin-description.html` | 精简的插件文字介绍 |
 | `docs/plugin-change-notes.html` | 插件详情中的版本更新说明 |
-| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondiff/ui/` | Diff 面板、工具栏布局、工具窗口及菜单入口 |
-| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondiff/logic/` | 比对控制器、后台格式化、输入校验及文档更新 |
-| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondiff/util/` | 光标映射和界面文案资源解析 |
+| `docs/jsondifftool-eula.md` | 插件的最终用户许可协议 |
+| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondifftool/ui/` | Diff 面板、工具栏布局、工具窗口及菜单入口 |
+| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondifftool/logic/` | 比对控制器、后台格式化、输入校验及文档更新 |
+| `src/main/kotlin/com/github/zhangwei0621/asplugin/jsondifftool/util/` | 光标映射和界面文案资源解析 |
 | `src/main/resources/messages/MyBundle.properties` | 集中管理界面文案 |
-| `src/test/kotlin/com/github/zhangwei0621/asplugin/jsondiff/` | 按 ui、logic、util 分包的布局、格式化及光标映射测试 |
+| `src/test/kotlin/com/github/zhangwei0621/asplugin/jsondifftool/` | 按 ui、logic、util 分包的布局、格式化及光标映射测试 |
 
 ## 开始开发
 
-JsonDiff 使用插件自带的 Gson 严格解析 JSON，构建时通过 Shadow 迁移到独立包名，避免与 IDE 自带 Gson 冲突；界面复用原生双栏 Diff 编辑器。解析在后台执行，自动格式化只应用最新输入对应的结果。工具窗口销毁后，监听器、定时任务及 Diff 编辑器由平台统一释放。
+JsonDiffTool 使用插件自带的 Gson 严格解析 JSON，构建时通过 Shadow 迁移到独立包名，避免与 IDE 自带 Gson 冲突；界面复用原生双栏 Diff 编辑器。解析在后台执行，自动格式化只应用最新输入对应的结果。工具窗口销毁后，监听器、定时任务及 Diff 编辑器由平台统一释放。
 
-`JsonDiffPanel` 负责布局、控件绑定和状态展示；`JsonDiffController` 负责输入监听、格式化调度、交换与清空、撤销及光标恢复。控制器通过回调交付校验结果，操作文案由 UI 层解析后传入。
+`JsonDiffToolPanel` 负责布局、控件绑定和状态展示；`JsonDiffToolController` 负责输入监听、格式化调度、交换与清空、撤销及光标恢复。控制器通过回调交付校验结果，操作文案由 UI 层解析后传入。
 
 界面文案统一放入 `MyBundle.properties`，通过 `MyBundle` 获取；格式化、交换、清空和状态图标使用 IDE 自带的 `AllIcons`，插件列表、工具窗口及菜单入口使用 `META-INF` 中的品牌图标。测试覆盖严格格式校验、重复键、递归排序、数组顺序、数字精度、中文、嵌套深度及格式化后的光标映射。需要 IDE 集成测试时，再添加 IntelliJ Platform 测试框架依赖。

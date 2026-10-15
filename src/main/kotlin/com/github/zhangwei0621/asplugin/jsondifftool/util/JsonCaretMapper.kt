@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.util
+package com.github.zhangwei0621.asplugin.jsondifftool.util
 
 /**
  * 在格式化前后按非排版字符的位置映射光标，减少缩进变化造成的跳动。

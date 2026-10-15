@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.ui
+package com.github.zhangwei0621.asplugin.jsondifftool.ui
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -8,7 +8,7 @@ import javax.swing.BorderFactory
 import javax.swing.JPanel
 
 /** 用固定组件尺寸验证工具栏单行、换行和恢复布局，排除 IDE 主题与字体的干扰。 */
-class JsonDiffToolbarLayoutTest {
+class JsonDiffToolToolbarLayoutTest {
     @Test
     fun `宽窗口中操作与选项分居两端并保持垂直居中`() {
         val panel = toolbar(1200)
@@ -54,7 +54,7 @@ class JsonDiffToolbarLayoutTest {
     }
 
     /** 创建固定操作区和选项区，并按布局报告的高度分配容器尺寸。 */
-    private fun toolbar(width: Int) = JPanel(JsonDiffToolbarLayout(24, 6)).apply {
+    private fun toolbar(width: Int) = JPanel(JsonDiffToolToolbarLayout(24, 6)).apply {
         border = BorderFactory.createEmptyBorder(8, 12, 8, 12)
         add(JPanel().apply { preferredSize = Dimension(112, 32) })
         add(JPanel().apply { preferredSize = Dimension(240, 24) })

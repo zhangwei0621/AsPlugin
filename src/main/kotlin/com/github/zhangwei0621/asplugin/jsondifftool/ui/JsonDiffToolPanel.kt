@@ -1,8 +1,8 @@
-package com.github.zhangwei0621.asplugin.jsondiff.ui
+package com.github.zhangwei0621.asplugin.jsondifftool.ui
 
-import com.github.zhangwei0621.asplugin.jsondiff.logic.JsonDiffController
-import com.github.zhangwei0621.asplugin.jsondiff.logic.JsonFormatter
-import com.github.zhangwei0621.asplugin.jsondiff.util.MyBundle
+import com.github.zhangwei0621.asplugin.jsondifftool.logic.JsonDiffToolController
+import com.github.zhangwei0621.asplugin.jsondifftool.logic.JsonFormatter
+import com.github.zhangwei0621.asplugin.jsondifftool.util.MyBundle
 import com.intellij.diff.DiffContentFactory
 import com.intellij.diff.DiffEditorTitleCustomizer
 import com.intellij.diff.DiffManager
@@ -38,13 +38,13 @@ import javax.swing.JPanel
 import javax.swing.SwingConstants
 
 /**
- * JsonDiff 的界面容器，只负责布局、交互绑定和校验状态展示。
+ * JsonDiffTool 的界面容器，只负责布局、交互绑定和校验状态展示。
  *
  * BorderLayout 分为顶部操作栏、中间原生 Diff 编辑器、底部双栏状态区。
- * 文档监听、后台解析和可撤销的写入操作交给 JsonDiffController。
+ * 文档监听、后台解析和可撤销的写入操作交给 JsonDiffToolController。
  * 本面板作为 Disposable 根节点，统一管理控制器与 Diff 编辑器的生命周期。
  */
-internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposable {
+internal class JsonDiffToolPanel(project: Project) : JPanel(BorderLayout()), Disposable {
     // 指定 JSON 文件类型，原生编辑器可使用对应的语法高亮和编辑支持。
     private val fileType = FileTypeManager.getInstance().getFileTypeByExtension("json")
     private val left = DiffContentFactory.getInstance().createEditable(project, "", fileType)
@@ -52,21 +52,21 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
     private val diffPanel = DiffManager.getInstance().createRequestPanel(project, this, null)
 
     // 初始默认开启自动格式化，关闭排序；所有可见文案统一从资源文件读取。
-    private val autoFormat = JBCheckBox(MyBundle["jsondiff.autoformat"], true)
-    private val sortKeys = JBCheckBox(MyBundle["jsondiff.sort.keys"], false)
-    private val leftStatus = JBLabel(MyBundle["jsondiff.status.empty"])
-    private val rightStatus = JBLabel(MyBundle["jsondiff.status.empty"])
+    private val autoFormat = JBCheckBox(MyBundle["jsondifftool.autoformat"], true)
+    private val sortKeys = JBCheckBox(MyBundle["jsondifftool.sort.keys"], false)
+    private val leftStatus = JBLabel(MyBundle["jsondifftool.status.empty"])
+    private val rightStatus = JBLabel(MyBundle["jsondifftool.status.empty"])
     private val leftStats = JBLabel()
     private val rightStats = JBLabel()
     // 空状态也保留图标占位，校验状态切换时文字位置和状态栏高度不会跳动。
     private val neutralStatusIcon = EmptyIcon.create(JBUI.scale(16))
 
     // UI 提供选项和操作名称；控制器回调已返回 EDT，可以直接更新 Swing 控件。
-    private val controller = JsonDiffController(
+    private val controller = JsonDiffToolController(
         project, left.document, right.document,
-        options = { JsonDiffController.Options(autoFormat.isSelected, sortKeys.isSelected) },
-        commandNames = JsonDiffController.CommandNames(
-            MyBundle["jsondiff.format"], MyBundle["jsondiff.swap"], MyBundle["jsondiff.clear"],
+        options = { JsonDiffToolController.Options(autoFormat.isSelected, sortKeys.isSelected) },
+        commandNames = JsonDiffToolController.CommandNames(
+            MyBundle["jsondifftool.format"], MyBundle["jsondifftool.swap"], MyBundle["jsondifftool.clear"],
         ),
         onPending = ::showPendingStatus,
         onResult = { leftResult, rightResult ->
@@ -82,16 +82,16 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
 
         // 使用 IDE 原生 ActionToolbar，复用图标按钮、悬停提示和主题样式。
         val actions = DefaultActionGroup().apply {
-            add(action("jsondiff.format", AllIcons.Actions.PrettyPrint, controller::format))
-            add(action("jsondiff.swap", AllIcons.Actions.SwapPanels, controller::swap))
+            add(action("jsondifftool.format", AllIcons.Actions.PrettyPrint, controller::format))
+            add(action("jsondifftool.swap", AllIcons.Actions.SwapPanels, controller::swap))
             addSeparator()
-            add(action("jsondiff.clear", AllIcons.Actions.GC, controller::clear))
+            add(action("jsondifftool.clear", AllIcons.Actions.GC, controller::clear))
         }
-        val toolbar = ActionManager.getInstance().createActionToolbar("JsonDiff.Toolbar", actions, true)
+        val toolbar = ActionManager.getInstance().createActionToolbar("JsonDiffTool.Toolbar", actions, true)
         // Action 获取本面板的数据上下文，避免依赖当前焦点碰巧落在哪个窗口。
         toolbar.targetComponent = this
-        autoFormat.toolTipText = MyBundle["jsondiff.autoformat.tooltip"]
-        sortKeys.toolTipText = MyBundle["jsondiff.sort.keys.tooltip"]
+        autoFormat.toolTipText = MyBundle["jsondifftool.autoformat.tooltip"]
+        sortKeys.toolTipText = MyBundle["jsondifftool.sort.keys.tooltip"]
         val options = JPanel().apply {
             layout = BoxLayout(this, BoxLayout.X_AXIS)
             add(autoFormat)
@@ -99,7 +99,7 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
             add(sortKeys)
         }
         // 工具栏先加入操作区，再加入选项区；自定义布局依赖这两个子组件的顺序。
-        add(JPanel(JsonDiffToolbarLayout(JBUI.scale(24), JBUI.scale(6))).apply {
+        add(JPanel(JsonDiffToolToolbarLayout(JBUI.scale(24), JBUI.scale(6))).apply {
             border = BorderFactory.createCompoundBorder(
                 JBUI.Borders.customLine(JBColor.border(), 0, 0, 1, 0),
                 JBUI.Borders.empty(8, 12),
@@ -133,13 +133,13 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
         updateStatistics()
 
         // 固定使用原生双栏 Diff 工具；空白差异参与比较，关闭自动格式化后仍可检查排版。
-        diffPanel.putContextHints(DiffUserDataKeys.PLACE, "JsonDiff")
+        diffPanel.putContextHints(DiffUserDataKeys.PLACE, "JsonDiffTool")
         diffPanel.putContextHints(DiffUserDataKeysEx.FORCE_DIFF_TOOL, SimpleDiffTool.INSTANCE)
         diffPanel.putContextHints(DiffUserDataKeys.DO_NOT_IGNORE_WHITESPACES, true)
-        val leftTitle = MyBundle["jsondiff.left.title"]
-        val rightTitle = MyBundle["jsondiff.right.title"]
+        val leftTitle = MyBundle["jsondifftool.left.title"]
+        val rightTitle = MyBundle["jsondifftool.right.title"]
         diffPanel.setRequest(SimpleDiffRequest(
-            MyBundle["jsondiff.title"], left, right,
+            MyBundle["jsondifftool.title"], left, right,
             leftTitle, rightTitle,
         ).apply {
             // 标题交给原生 Diff 分栏布局管理，拖动分隔条后仍居中对应各自的编辑区域。
@@ -188,7 +188,7 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
     private fun updateStatistics() {
         listOf(left.document to leftStats, right.document to rightStats).forEach { (document, label) ->
             label.text = MyBundle[
-                "jsondiff.document.stats", if (document.textLength == 0) 0 else document.lineCount, document.textLength,
+                "jsondifftool.document.stats", if (document.textLength == 0) 0 else document.lineCount, document.textLength,
             ]
             label.toolTipText = label.text
         }
@@ -211,8 +211,8 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
 
     /** 输入变化时立即显示等待校验的状态，并清除上次错误颜色及错误路径提示。 */
     private fun showPendingStatus() {
-        leftStatus.text = MyBundle["jsondiff.status.pending"]
-        rightStatus.text = MyBundle["jsondiff.status.pending"]
+        leftStatus.text = MyBundle["jsondifftool.status.pending"]
+        rightStatus.text = MyBundle["jsondifftool.status.pending"]
         listOf(leftStatus, rightStatus).forEach { label ->
             label.icon = neutralStatusIcon
             label.foreground = UIUtil.getContextHelpForeground()
@@ -227,10 +227,10 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
      */
     private fun updateStatus(label: JBLabel, result: JsonFormatter.Result) {
         label.text = when (result) {
-            JsonFormatter.Result.Empty -> MyBundle["jsondiff.status.empty"]
-            is JsonFormatter.Result.Valid -> MyBundle["jsondiff.status.valid"]
+            JsonFormatter.Result.Empty -> MyBundle["jsondifftool.status.empty"]
+            is JsonFormatter.Result.Valid -> MyBundle["jsondifftool.status.valid"]
             is JsonFormatter.Result.Invalid -> MyBundle[
-                if (result.duplicateKey) "jsondiff.status.duplicate" else "jsondiff.status.invalid",
+                if (result.duplicateKey) "jsondifftool.status.duplicate" else "jsondifftool.status.invalid",
             ]
         }
         label.icon = when (result) {
@@ -244,7 +244,7 @@ internal class JsonDiffPanel(project: Project) : JPanel(BorderLayout()), Disposa
         } else UIUtil.getContextHelpForeground()
         label.toolTipText = if (result is JsonFormatter.Result.Invalid) {
             MyBundle[
-                if (result.duplicateKey) "jsondiff.status.duplicate.details" else "jsondiff.status.invalid.details", result.path,
+                if (result.duplicateKey) "jsondifftool.status.duplicate.details" else "jsondifftool.status.invalid.details", result.path,
             ]
         } else label.text
     }

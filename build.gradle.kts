@@ -91,7 +91,7 @@ intellijPlatformTesting {
 relocatedJsonJar.configure {
     configurations = listOf(jsonLibrary)
     relocate("com.google.gson", "com.github.zhangwei0621.asplugin.internal.gson")
-    archiveBaseName = "jsondiff-gson"
+    archiveBaseName = "jsondifftool-gson"
     // JAR 版本沿用依赖版本目录，与插件发布版本分别管理。
     archiveVersion = libs.versions.gson
     archiveClassifier = ""

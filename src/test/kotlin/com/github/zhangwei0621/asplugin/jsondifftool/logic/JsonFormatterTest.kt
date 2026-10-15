@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.logic
+package com.github.zhangwei0621.asplugin.jsondifftool.logic
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse

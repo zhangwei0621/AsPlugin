@@ -10,13 +10,13 @@
     <extensions defaultExtensionNs="com.intellij">
         <!-- IDE 通过工厂创建窗口内容，id 必须与菜单动作激活窗口时使用的标识一致。 -->
         <!-- 图标从 Kotlin 静态字段加载，复用品牌 SVG 并缩放到工具窗口入口尺寸。 -->
-        <toolWindow id="JsonDiff" anchor="bottom" icon="com.github.zhangwei0621.asplugin.jsondiff.ui.JsonDiffIcons.jsonDiff"
-                    factoryClass="com.github.zhangwei0621.asplugin.jsondiff.ui.JsonDiffToolWindowFactory"/>
+        <toolWindow id="JsonDiffTool" anchor="bottom" icon="com.github.zhangwei0621.asplugin.jsondifftool.ui.JsonDiffToolIcons.jsonDiffTool"
+                    factoryClass="com.github.zhangwei0621.asplugin.jsondifftool.ui.JsonDiffToolWindowFactory"/>
     </extensions>
 
     <actions>
         <!-- 注册打开窗口的菜单动作，id 是动作标识，class 指向具体实现。 -->
-        <action id="JsonDiff.Open" class="com.github.zhangwei0621.asplugin.jsondiff.ui.OpenJsonDiffAction">
+        <action id="JsonDiffTool.Open" class="com.github.zhangwei0621.asplugin.jsondifftool.ui.OpenJsonDiffToolAction">
             <!-- 将入口添加到 Tools 菜单末尾。 -->
             <add-to-group group-id="ToolsMenu" anchor="last"/>
         </action>

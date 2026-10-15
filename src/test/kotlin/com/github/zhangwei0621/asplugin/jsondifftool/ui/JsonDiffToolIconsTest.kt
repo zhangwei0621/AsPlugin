@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.ui
+package com.github.zhangwei0621.asplugin.jsondifftool.ui
 
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.ScalableIcon
@@ -13,7 +13,7 @@ import java.awt.image.BufferedImage
 import javax.swing.Icon
 
 /** 验证工具窗口和原生菜单要求的图标接口，防止尺寸修复导致整个工具窗口注册失败。 */
-class JsonDiffIconsTest {
+class JsonDiffToolIconsTest {
     @Before
     fun activateIcons() {
         // 普通单元测试不会启动 IDE，需要显式允许 IconLoader 加载实际 SVG 尺寸。
@@ -22,7 +22,7 @@ class JsonDiffIconsTest {
 
     @Test
     fun `工具窗口入口提供可缩放图标接口`() {
-        val icon = JsonDiffIcons.jsonDiff
+        val icon = JsonDiffToolIcons.jsonDiffTool
         assertTrue(icon is ScalableIcon)
         assertEquals(16, icon.iconWidth)
         assertEquals(16, icon.iconHeight)
@@ -32,7 +32,7 @@ class JsonDiffIconsTest {
     fun `XML图标入口可按平台要求的精确字段类型反射加载`() {
         // 与新版 AS 的 XML 图标加载方式一致，字段类型必须精确匹配 Icon 而非子接口。
         val getter = MethodHandles.publicLookup().findStaticGetter(
-            JsonDiffIcons::class.java, "jsonDiff", Icon::class.java,
+            JsonDiffToolIcons::class.java, "jsonDiffTool", Icon::class.java,
         )
         val icon = getter.invoke() as Icon
         assertTrue(icon is ScalableIcon)
@@ -42,7 +42,7 @@ class JsonDiffIconsTest {
 
     @Test
     fun `工具窗口放大图标后可以恢复入口基础尺寸`() {
-        val enlarged = (JsonDiffIcons.jsonDiff as ScalableIcon).scale(1.25f)
+        val enlarged = (JsonDiffToolIcons.jsonDiffTool as ScalableIcon).scale(1.25f)
         assertTrue(enlarged is ScalableIcon)
         assertEquals(20, enlarged.iconWidth)
         assertEquals(20, enlarged.iconHeight)
@@ -54,7 +54,7 @@ class JsonDiffIconsTest {
     @Test
     fun `原生菜单转换在两种主题下都保留入口尺寸`() {
         listOf(false, true).forEach { dark ->
-            val menuIcon = IconLoader.getMenuBarIcon(JsonDiffIcons.jsonDiff, dark)
+            val menuIcon = IconLoader.getMenuBarIcon(JsonDiffToolIcons.jsonDiffTool, dark)
             assertTrue(menuIcon is ScalableIcon)
             assertEquals(16, menuIcon.iconWidth)
             assertEquals(16, menuIcon.iconHeight)
@@ -63,7 +63,7 @@ class JsonDiffIconsTest {
 
     @Test
     fun `切换主题后仍能按工具窗口要求缩放`() {
-        val darkIcon = IconLoader.getDarkIcon(JsonDiffIcons.jsonDiff, true)
+        val darkIcon = IconLoader.getDarkIcon(JsonDiffToolIcons.jsonDiffTool, true)
         assertTrue(darkIcon is ScalableIcon)
         val enlarged = (darkIcon as ScalableIcon).scale(1.25f)
         assertEquals(20, enlarged.iconWidth)
@@ -75,7 +75,7 @@ class JsonDiffIconsTest {
         val previousDark = !JBColor.isBright()
         try {
             JBColor.setDark(false)
-            val icon = (JsonDiffIcons.jsonDiff as ScalableIcon).scale(1.25f)
+            val icon = (JsonDiffToolIcons.jsonDiffTool as ScalableIcon).scale(1.25f)
             val lightPixels = render(icon)
             JBColor.setDark(true)
             val darkPixels = render(icon)
@@ -93,8 +93,8 @@ class JsonDiffIconsTest {
         val previousDark = !JBColor.isBright()
         try {
             JBColor.setDark(false)
-            val darkMenu = IconLoader.getMenuBarIcon(JsonDiffIcons.jsonDiff, true)
-            val lightMenu = IconLoader.getMenuBarIcon(JsonDiffIcons.jsonDiff, false)
+            val darkMenu = IconLoader.getMenuBarIcon(JsonDiffToolIcons.jsonDiffTool, true)
+            val lightMenu = IconLoader.getMenuBarIcon(JsonDiffToolIcons.jsonDiffTool, false)
             val darkPixels = render(darkMenu)
             val lightPixels = render(lightMenu)
             assertFalse(darkPixels.contentEquals(lightPixels))

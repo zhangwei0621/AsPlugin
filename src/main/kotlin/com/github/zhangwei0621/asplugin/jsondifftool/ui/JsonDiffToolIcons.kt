@@ -1,4 +1,4 @@
-package com.github.zhangwei0621.asplugin.jsondiff.ui
+package com.github.zhangwei0621.asplugin.jsondifftool.ui
 
 import com.intellij.openapi.util.IconLoader
 import com.intellij.openapi.util.ScalableIcon
@@ -11,10 +11,10 @@ import java.awt.Graphics
 import javax.swing.Icon
 
 /**
- * 工具窗口和菜单入口共用的 JsonDiff 图标。
+ * 工具窗口和菜单入口共用的 JsonDiffTool 图标。
  * 复用品牌 SVG，由 IconLoader 根据主题选择同目录的 _dark 版本，避免重复维护素材。
  */
-internal object JsonDiffIcons {
+internal object JsonDiffToolIcons {
     /**
      * 将 40×40 的品牌图标缩放为入口使用的 16×16，保留平台的缩放与主题支持。
      * 工具窗口需要 ScalableIcon，原生菜单需要保留缩放后的尺寸，两种入口共用同一实现。
@@ -23,8 +23,8 @@ internal object JsonDiffIcons {
      * 实际对象由 EntryIcon 实现 ScalableIcon，满足侧边栏的运行时缩放要求。
      */
     @JvmField
-    val jsonDiff: Icon = EntryIcon(
-        IconLoader.getIcon("/META-INF/pluginIcon.svg", JsonDiffIcons::class.java),
+    val jsonDiffTool: Icon = EntryIcon(
+        IconLoader.getIcon("/META-INF/pluginIcon.svg", JsonDiffToolIcons::class.java),
     )
 
     /**
